@@ -5,14 +5,16 @@ long microsecondsToCentimeters(long microseconds) {
   return microseconds / 29 / 2;
 }
 
-void move_RIGHTmotor(int speed, int direction) {
-  analogWrite(MOTOR_RIGHT_1, speed);
-  digitalWrite(MOTOR_RIGHT_2, direction);
+void move_RIGHTmotor(int speed) {
+  analogWrite(MOTOR_RIGHT_PWM, speed); // PWM
+  digitalWrite(MOTOR_RIGHT_1, HIGH);
+  digitalWrite(MOTOR_RIGHT_2, LOW);
 }
 
-void move_LEFTmotor(int speed, int direction) {
-  analogWrite(MOTOR_LEFT_1, speed);
-  digitalWrite(MOTOR_LEFT_2, direction);
+void move_LEFTmotor(int speed) {
+  analogWrite(MOTOR_LEFT_PWM, speed); // PWM
+  digitalWrite(MOTOR_LEFT_1, HIGH);
+  digitalWrite(MOTOR_LEFT_2, LOW);
 }
 
 void measure_distance() {
@@ -46,16 +48,16 @@ void target_lock() {
   bool obstacleRight = distance_2 < TARGET_DISTANCE_THRESHOLD;
 
   if (obstacleLeft && !obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT - 20, FORWARD);
+    move_RIGHTmotor(SPEED_DEFAULT);
+    move_LEFTmotor(SPEED_DEFAULT - 20);
 
   } else if (!obstacleLeft && obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT - 20, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+    move_RIGHTmotor(SPEED_DEFAULT - 20);
+    move_LEFTmotor(SPEED_DEFAULT);
 
   } else {
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+    move_RIGHTmotor(SPEED_DEFAULT);
+    move_LEFTmotor(SPEED_DEFAULT);
   }
 }
 

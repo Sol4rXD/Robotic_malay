@@ -1,9 +1,12 @@
 #include <Arduino.h>
 
-#define MOTOR_RIGHT_1 12 // PWM 
-#define MOTOR_RIGHT_2 13 // Direction
-#define MOTOR_LEFT_1 12  // PWM 
-#define MOTOR_LEFT_2 12  // Direction
+#define MOTOR_RIGHT_1 12 
+#define MOTOR_RIGHT_2 13 
+#define MOTOR_RIGHT_PWM 14
+
+#define MOTOR_LEFT_1 12  
+#define MOTOR_LEFT_2 12  
+#define MOTOR_LEFT_PWM 15
 
 const int FORWARD = HIGH;
 const int BACKWARD = LOW;
