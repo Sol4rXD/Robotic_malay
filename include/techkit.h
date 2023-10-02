@@ -29,6 +29,21 @@ void move_LEFTmotor(int speed, String direction) {
   }
 }
 
+void stop_allmotor(int x) {
+  digitalWrite(MOTOR_LEFT_1, LOW);
+  digitalWrite(MOTOR_LEFT_2, LOW);
+  digitalWrite(MOTOR_RIGHT_1, LOW);
+  digitalWrite(MOTOR_RIGHT_2, LOW);
+  delay(x);
+} 
+
+void make_uturn() {
+  stop_allmotor(1000);
+  move_RIGHTmotor(255, BACKWARD);
+  move_LEFTmotor(150, BACKWARD);
+  stop_allmotor(500);
+}
+
 void measure_distance() {
     // LEFT
     pinMode(TRIQ_PIN_LEFT, OUTPUT);
@@ -54,6 +69,14 @@ void measure_distance() {
 
     obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
     obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
+}
+
+void check_field() {
+  opacity = analogRead(LIGHT_SENSOR_PIN);
+
+  if (opacity < FIELD_THRESHOLD) {
+    make_uturn();
+  } 
 }
 
 void target_scan() {

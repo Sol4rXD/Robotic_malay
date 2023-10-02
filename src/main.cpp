@@ -2,6 +2,8 @@
 #include <techkit.h>
 
 void setup() {
+  Serial.begin(115200);
+  
   pinMode(MOTOR_RIGHT_1, OUTPUT);
   pinMode(MOTOR_RIGHT_2, OUTPUT);
   pinMode(MOTOR_RIGHT_PWM, OUTPUT);
@@ -14,6 +16,8 @@ void setup() {
 }
 
 void loop() {
+  check_field();
+
   if (!targetDetected) {
     target_scan(); 
   } else {
