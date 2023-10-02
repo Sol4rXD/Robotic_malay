@@ -61,10 +61,10 @@ void target_lock() {
 
   if (obstacleLeft && !obstacleRight) {
     move_RIGHTmotor(SPEED_DEFAULT);
-    move_LEFTmotor(SPEED_DEFAULT - 30);
+    move_LEFTmotor(SPEED_DEFAULT - 55);
 
   } else if (!obstacleLeft && obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT - 30);
+    move_RIGHTmotor(SPEED_DEFAULT - 55);
     move_LEFTmotor(SPEED_DEFAULT);
 
   } else {

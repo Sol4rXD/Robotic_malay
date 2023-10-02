@@ -9,9 +9,6 @@
 #define MOTOR_RIGHT_PWM 14
 #define MOTOR_LEFT_PWM 15
 
-const int FORWARD = HIGH;
-const int BACKWARD = LOW;
-
 #define TRIQ_PIN_1 13 
 #define ECHO_PIN_1 13
 
