@@ -31,55 +31,66 @@ void move_LEFTmotor(int speed, String direction) {
 
 void measure_distance() {
     // LEFT
-    pinMode(TRIQ_PIN_1, OUTPUT);
-    digitalWrite(TRIQ_PIN_1, LOW);
+    pinMode(TRIQ_PIN_LEFT, OUTPUT);
+    digitalWrite(TRIQ_PIN_LEFT, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIQ_PIN_1, HIGH);
+    digitalWrite(TRIQ_PIN_LEFT, HIGH);
     delayMicroseconds(5);
-    digitalWrite(TRIQ_PIN_1, LOW);
-    pinMode(TRIQ_PIN_1, INPUT);
-    duration_1 = pulseIn(TRIQ_PIN_1, HIGH);
-    distance_1 = microsecondsToCentimeters(duration_1); // CM Unit
+    digitalWrite(TRIQ_PIN_LEFT, LOW);
+    pinMode(TRIQ_PIN_LEFT, INPUT);
+    duration_LEFT = pulseIn(TRIQ_PIN_LEFT, HIGH);
+    distance_LEFT = microsecondsToCentimeters(duration_LEFT); // CM Unit
 
     // RIGHT
-    pinMode(TRIQ_PIN_2, OUTPUT);
-    digitalWrite(TRIQ_PIN_2, LOW);
+    pinMode(TRIQ_PIN_RIGHT, OUTPUT);
+    digitalWrite(TRIQ_PIN_RIGHT, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIQ_PIN_2, HIGH);
+    digitalWrite(TRIQ_PIN_RIGHT, HIGH);
     delayMicroseconds(5);
-    digitalWrite(TRIQ_PIN_2, LOW);
-    pinMode(TRIQ_PIN_2, INPUT);
-    duration_2 = pulseIn(TRIQ_PIN_2, HIGH);
-    distance_2 = microsecondsToCentimeters(duration_2); // CM Unit
-}
+    digitalWrite(TRIQ_PIN_RIGHT, LOW);
+    pinMode(TRIQ_PIN_RIGHT, INPUT);
+    duration_RIGHT = pulseIn(TRIQ_PIN_RIGHT, HIGH);
+    distance_RIGHT = microsecondsToCentimeters(duration_RIGHT); // CM Unit
 
-void target_lock() {
-  measure_distance();
-
-  bool obstacleLeft = distance_1 < TARGET_DISTANCE_THRESHOLD;
-  bool obstacleRight = distance_2 < TARGET_DISTANCE_THRESHOLD;
-
-  if (obstacleLeft && !obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT - 55, FORWARD);
-
-  } else if (!obstacleLeft && obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT - 55, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
-
-  } else {
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
-  }
+    obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
+    obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
 }
 
 void target_scan() {
   move_RIGHTmotor(255, FORWARD);
   move_LEFTmotor(200, BACKWARD);
+
+  measure_distance();
+
+  if(obstacleLeft || obstacleRight) {
+    targetDetected = true;
+  }
 }
 
+void target_lock() {
+  measure_distance();
 
+  if (obstacleLeft && !obstacleRight) {
+    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT - 55, FORWARD);
 
+    targetDetected = true;
 
+  } else if (!obstacleLeft && obstacleRight) {
+    move_RIGHTmotor(SPEED_DEFAULT - 55, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+
+    targetDetected = true;
+
+  } else if (obstacleLeft && obstacleRight) { 
+    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+
+    targetDetected = true;
+
+  } else if (!obstacleLeft && !obstacleRight) {
+    targetDetected = false;
+  }
+}
 
 

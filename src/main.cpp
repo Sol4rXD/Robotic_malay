@@ -9,8 +9,14 @@ void setup() {
   pinMode(MOTOR_LEFT_PWM, OUTPUT);
   pinMode(MOTOR_LEFT_1, OUTPUT);
   pinMode(MOTOR_LEFT_2, OUTPUT);
+
+  delay(3000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if (!targetDetected) {
+    target_scan(); 
+  } else {
+    target_lock(); 
+  }
 }

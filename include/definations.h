@@ -9,11 +9,11 @@
 #define MOTOR_RIGHT_PWM 14
 #define MOTOR_LEFT_PWM 15
 
-#define TRIQ_PIN_1 13 
-#define ECHO_PIN_1 13
+#define TRIQ_PIN_LEFT 13 
+#define ECHO_PIN_LEFT 13
 
-#define TRIQ_PIN_2 13 
-#define ECHO_PIN_2 13
+#define TRIQ_PIN_RIGHT 13 
+#define ECHO_PIN_RIGHT 13
 
 const int TARGET_DISTANCE_THRESHOLD = 20;
 const int SPEED_DEFAULT = 255;
@@ -21,5 +21,9 @@ const int SPEED_DEFAULT = 255;
 const String FORWARD = "FORWARD";
 const String BACKWARD = "BACKWARD";
 
-long duration_1, duration_2, distance_1, distance_2;
+long duration_RIGHT, duration_LEFT, distance_RIGHT, distance_LEFT;
 
+bool targetDetected = false;
+
+bool obstacleLeft;
+bool obstacleRight;
