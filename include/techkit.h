@@ -80,13 +80,13 @@ void check_field() {
 }
 
 void target_scan() {
-  move_RIGHTmotor(255, FORWARD);
-  move_LEFTmotor(200, BACKWARD);
-
   measure_distance();
 
-  if(obstacleLeft || obstacleRight) {
+  if (obstacleLeft || obstacleRight) {
     targetDetected = true;
+  } else {
+    move_RIGHTmotor(255, FORWARD);
+    move_LEFTmotor(200, BACKWARD);
   }
 }
 
