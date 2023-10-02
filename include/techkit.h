@@ -74,7 +74,8 @@ void target_lock() {
 }
 
 void target_scan() {
-
+  move_RIGHTmotor(255, FORWARD);
+  move_LEFTmotor(200, BACKWARD);
 }
 
 

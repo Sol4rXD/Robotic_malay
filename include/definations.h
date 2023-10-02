@@ -23,19 +23,3 @@ const String BACKWARD = "BACKWARD";
 
 long duration_1, duration_2, distance_1, distance_2;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
