@@ -11,7 +11,7 @@ void move_RIGHTmotor(int speed, String direction) {
     digitalWrite(MOTOR_RIGHT_1, HIGH);
     digitalWrite(MOTOR_RIGHT_2, LOW);
   }
-  else{
+  else if(direction == "BACKWARD"){
     digitalWrite(MOTOR_RIGHT_1, LOW);
     digitalWrite(MOTOR_RIGHT_2, HIGH);
   }
@@ -23,7 +23,7 @@ void move_LEFTmotor(int speed, String direction) {
     digitalWrite(MOTOR_LEFT_1, HIGH);
     digitalWrite(MOTOR_LEFT_2, LOW);
   }
-  else{
+  else if(direction == "BACKWARD"){
     digitalWrite(MOTOR_LEFT_1, LOW);
     digitalWrite(MOTOR_LEFT_2, HIGH); 
   }
@@ -60,16 +60,16 @@ void target_lock() {
   bool obstacleRight = distance_2 < TARGET_DISTANCE_THRESHOLD;
 
   if (obstacleLeft && !obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT);
-    move_LEFTmotor(SPEED_DEFAULT - 55);
+    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT - 55, FORWARD);
 
   } else if (!obstacleLeft && obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT - 55);
-    move_LEFTmotor(SPEED_DEFAULT);
+    move_RIGHTmotor(SPEED_DEFAULT - 55, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
 
   } else {
-    move_RIGHTmotor(SPEED_DEFAULT);
-    move_LEFTmotor(SPEED_DEFAULT);
+    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
+    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
   }
 }
 

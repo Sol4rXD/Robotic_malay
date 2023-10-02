@@ -16,7 +16,10 @@
 #define ECHO_PIN_2 13
 
 const int TARGET_DISTANCE_THRESHOLD = 20;
-const int SPEED_DEFAULT = 150;
+const int SPEED_DEFAULT = 255;
+
+const String FORWARD = "FORWARD";
+const String BACKWARD = "BACKWARD";
 
 long duration_1, duration_2, distance_1, distance_2;
 
