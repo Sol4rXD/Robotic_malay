@@ -2,10 +2,11 @@
 
 #define MOTOR_RIGHT_1 12 
 #define MOTOR_RIGHT_2 13 
-#define MOTOR_RIGHT_PWM 14
 
 #define MOTOR_LEFT_1 12  
 #define MOTOR_LEFT_2 12  
+
+#define MOTOR_RIGHT_PWM 14
 #define MOTOR_LEFT_PWM 15
 
 const int FORWARD = HIGH;

@@ -5,16 +5,28 @@ long microsecondsToCentimeters(long microseconds) {
   return microseconds / 29 / 2;
 }
 
-void move_RIGHTmotor(int speed) {
+void move_RIGHTmotor(int speed, String direction) {
   analogWrite(MOTOR_RIGHT_PWM, speed); // PWM
-  digitalWrite(MOTOR_RIGHT_1, HIGH);
-  digitalWrite(MOTOR_RIGHT_2, LOW);
+  if(direction == "FORWARD"){ 
+    digitalWrite(MOTOR_RIGHT_1, HIGH);
+    digitalWrite(MOTOR_RIGHT_2, LOW);
+  }
+  else{
+    digitalWrite(MOTOR_RIGHT_1, LOW);
+    digitalWrite(MOTOR_RIGHT_2, HIGH);
+  }
 }
 
-void move_LEFTmotor(int speed) {
+void move_LEFTmotor(int speed, String direction) {
   analogWrite(MOTOR_LEFT_PWM, speed); // PWM
-  digitalWrite(MOTOR_LEFT_1, HIGH);
-  digitalWrite(MOTOR_LEFT_2, LOW);
+  if(direction == "FORWARD"){
+    digitalWrite(MOTOR_LEFT_1, HIGH);
+    digitalWrite(MOTOR_LEFT_2, LOW);
+  }
+  else{
+    digitalWrite(MOTOR_LEFT_1, LOW);
+    digitalWrite(MOTOR_LEFT_2, HIGH); 
+  }
 }
 
 void measure_distance() {
@@ -49,10 +61,10 @@ void target_lock() {
 
   if (obstacleLeft && !obstacleRight) {
     move_RIGHTmotor(SPEED_DEFAULT);
-    move_LEFTmotor(SPEED_DEFAULT - 20);
+    move_LEFTmotor(SPEED_DEFAULT - 30);
 
   } else if (!obstacleLeft && obstacleRight) {
-    move_RIGHTmotor(SPEED_DEFAULT - 20);
+    move_RIGHTmotor(SPEED_DEFAULT - 30);
     move_LEFTmotor(SPEED_DEFAULT);
 
   } else {
@@ -61,6 +73,9 @@ void target_lock() {
   }
 }
 
+void target_scan() {
+
+}
 
 
 
