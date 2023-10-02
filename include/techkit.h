@@ -85,7 +85,7 @@ void target_scan() {
   if (obstacleLeft || obstacleRight) {
     targetDetected = true;
   } else {
-    move_RIGHTmotor(255, FORWARD);
+    move_RIGHTmotor(200, FORWARD);
     move_LEFTmotor(200, BACKWARD);
   }
 }
