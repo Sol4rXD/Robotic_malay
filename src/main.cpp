@@ -12,6 +12,9 @@ void setup() {
   pinMode(MOTOR_LEFT_1, OUTPUT);
   pinMode(MOTOR_LEFT_2, OUTPUT);
 
+  pinMode(LIGHT_SENSOR_PIN_1, INPUT);
+  pinMode(LIGHT_SENSOR_PIN_2, INPUT);
+
   delay(3000);
 }
 

@@ -72,9 +72,33 @@ void measure_distance() {
 }
 
 void check_field() {
-  opacity = analogRead(LIGHT_SENSOR_PIN);
+  digitalWrite(LIGHT_SENSOR_PIN_1, HIGH); 
+  delayMicroseconds(10); 
+  pinMode(LIGHT_SENSOR_PIN_1, INPUT);
+  time_1 = micros();
 
-  if (opacity < FIELD_THRESHOLD) {
+  while (digitalRead(LIGHT_SENSOR_PIN_1) == HIGH) {}
+
+  if ((micros() - time_1) > last_1 && color_1 == 1) {
+    color_1 = -1;
+  } else if ((micros() - time_1) < last_1 && color_1 == -1) {
+    color_1 = 1;
+  }
+
+  // Sensor 2
+  digitalWrite(LIGHT_SENSOR_PIN_2, HIGH); 
+  delayMicroseconds(10); 
+  pinMode(LIGHT_SENSOR_PIN_2, INPUT);
+  time_2 = micros();
+
+  while (digitalRead(LIGHT_SENSOR_PIN_2) == HIGH) {}
+
+  if ((micros() - time_2) > last_2 && color_2 == 1) {
+    color_2 = -1;
+  } else if ((micros() - time_2) < last_2 && color_2 == -1) {
+    color_2 = 1;
+  }
+  if (color_1 == -1 || color_2 == -1) {
     make_uturn();
   } 
 }

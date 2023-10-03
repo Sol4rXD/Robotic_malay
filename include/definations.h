@@ -21,10 +21,11 @@
 #define ECHO_PIN_RIGHT 13 // CHECK
 
 // Light sensor
-#define LIGHT_SENSOR_PIN A0 // CHECK
+#define LIGHT_SENSOR_PIN_1 9 // CHECK
+#define LIGHT_SENSOR_PIN_2 10 // CHECK
 
 const int TARGET_DISTANCE_THRESHOLD = 20; // CHECK
-const int FIELD_THRESHOLD = 500; // CHECK (just measure on field first)
+const int FIELD_THRESHOLD = -1; // CHECK (just measure on field first)
 const int SPEED_DEFAULT = 255; // CHECK
 
 const String FORWARD = "FORWARD";
@@ -37,4 +38,8 @@ bool targetDetected = false;
 bool obstacleLeft;
 bool obstacleRight;
 
-int opacity;
+unsigned long time_1, time_2;
+
+int color_1 = 1, color_2 = 1;
+int last_1, last_2;
+int opacity_1, opacity_2;
