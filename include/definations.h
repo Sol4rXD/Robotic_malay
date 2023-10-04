@@ -9,8 +9,8 @@
 #define MOTOR_LEFT_2 12  // CHECK
 
 // Motor both PWM
-#define MOTOR_RIGHT_PWM 14  // CHECK
-#define MOTOR_LEFT_PWM 15   // CHECK
+#define MOTOR_RIGHT_PWM A0  // CHECK
+#define MOTOR_LEFT_PWM A1   // CHECK
 
 // Ultrasonic 1
 #define TRIQ_PIN_LEFT 13 // CHECK
