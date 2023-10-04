@@ -72,6 +72,7 @@ void measure_distance() {
 }
 
 void check_field() {
+  // Sensor 1
   digitalWrite(LIGHT_SENSOR_PIN_1, HIGH); 
   delayMicroseconds(10); 
   pinMode(LIGHT_SENSOR_PIN_1, INPUT);
@@ -79,10 +80,10 @@ void check_field() {
 
   while (digitalRead(LIGHT_SENSOR_PIN_1) == HIGH) {}
 
-  if ((micros() - time_1) > last_1 && color_1 == 1) {
-    color_1 = -1;
-  } else if ((micros() - time_1) < last_1 && color_1 == -1) {
-    color_1 = 1;
+  if ((static_cast<long>(micros()) - static_cast<long>(time_1)) > static_cast<long>(last_1) && color_1 == 1) {
+      color_1 = -1;
+  } else if ((static_cast<long>(micros()) - static_cast<long>(time_1)) < static_cast<long>(last_1) && color_1 == -1) {
+      color_1 = 1;
   }
 
   // Sensor 2
@@ -93,11 +94,12 @@ void check_field() {
 
   while (digitalRead(LIGHT_SENSOR_PIN_2) == HIGH) {}
 
-  if ((micros() - time_2) > last_2 && color_2 == 1) {
-    color_2 = -1;
-  } else if ((micros() - time_2) < last_2 && color_2 == -1) {
-    color_2 = 1;
+  if ((static_cast<long>(micros()) - static_cast<long>(time_2)) > static_cast<long>(last_2) && color_2 == 1) {
+      color_2 = -1;
+  } else if ((static_cast<long>(micros()) - static_cast<long>(time_2)) < static_cast<long>(last_2) && color_2 == -1) {
+      color_2 = 1;
   }
+
   if (color_1 == -1 || color_2 == -1) {
     make_uturn();
   } 
