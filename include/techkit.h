@@ -56,10 +56,7 @@ void measure_distance() {
     HighByte1 = mySerial1.read();
     LowByte1 = mySerial1.read();
     Len1 = HighByte1 * 256 + LowByte1; 
-    if (Len1 > 1 && Len1 < 10000) {
-      Serial.print("Sensor 1 Distance: ");
-      distance_LEFT = Len1;
-    }
+    distance_LEFT = Len1;
   }
 
   // Sensor 2
@@ -70,10 +67,7 @@ void measure_distance() {
     HighByte2 = mySerial2.read();
     LowByte2 = mySerial2.read();
     Len2 = HighByte2 * 256 + LowByte2; 
-    if (Len2 > 1 && Len2 < 10000) {
-      Serial.print("Sensor 2 Distance: ");
-      distance_RIGHT = Len2;
-    }
+    distance_RIGHT = Len2;
   }
   obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
   obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
