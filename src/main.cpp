@@ -12,8 +12,8 @@ void setup() {
   pinMode(MOTOR_LEFT_1, OUTPUT);
   pinMode(MOTOR_LEFT_2, OUTPUT);
 
-  pinMode(LIGHT_SENSOR_PIN_1, INPUT);
-  pinMode(LIGHT_SENSOR_PIN_2, INPUT);
+  qtr.setTypeRC();
+  qtr.setSensorPins((const uint8_t[]){8, 9}, SensorCount);
 
   delay(3000);
 }

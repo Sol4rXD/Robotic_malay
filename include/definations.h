@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+#define DEC 10
+
 // Motor right
 #define MOTOR_RIGHT_1 12 // CHECK
 #define MOTOR_RIGHT_2 13 // CHECK
@@ -12,20 +14,20 @@
 #define MOTOR_RIGHT_PWM A0  // CHECK
 #define MOTOR_LEFT_PWM A1   // CHECK
 
-// Ultrasonic 1
-#define TRIQ_PIN_LEFT 13 // CHECK
-#define ECHO_PIN_LEFT 13    // CHECK
+// Ultrasonic 
+HardwareSerial &mySerial1 = Serial1;
+HardwareSerial &mySerial2 = Serial2;
 
-// Ultrasonic 2
-#define TRIQ_PIN_RIGHT 13 // CHECK
-#define ECHO_PIN_RIGHT 13 // CHECK
+unsigned int HighByte1 = 0;
+unsigned int LowByte1 = 0;
+unsigned int Len1 = 0;
 
-// Light sensor
-#define LIGHT_SENSOR_PIN_1 9 // CHECK
-#define LIGHT_SENSOR_PIN_2 10 // CHECK
+unsigned int HighByte2 = 0;
+unsigned int LowByte2 = 0;
+unsigned int Len2 = 0;
 
-const int TARGET_DISTANCE_THRESHOLD = 20; // CHECK
-const int FIELD_THRESHOLD = -1; // CHECK (just measure on field first)
+const int TARGET_DISTANCE_THRESHOLD = 50; // CHECK
+const int FIELD_THRESHOLD = 2500; 
 const int SPEED_DEFAULT = 255; // CHECK
 
 const String FORWARD = "FORWARD";
@@ -40,6 +42,7 @@ bool obstacleRight;
 
 unsigned long time_1, time_2;
 
-int color_1 = 1, color_2 = 1;
-int last_1, last_2;
-int opacity_1, opacity_2;
+const uint8_t SensorCount = 2;
+uint16_t sensorValues[SensorCount];
+
+int LIGHT_1, LIGHT_2;

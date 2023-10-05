@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <definations.h>
+#include <QTRSensors.h>
+
+QTRSensors qtr;
 
 long microsecondsToCentimeters(long microseconds) {
   return microseconds / 29 / 2;
@@ -44,65 +47,44 @@ void make_uturn() {
   stop_allmotor(500);
 }
 
+// Modify this again
 void measure_distance() {
-    // LEFT
-    pinMode(TRIQ_PIN_LEFT, OUTPUT);
-    digitalWrite(TRIQ_PIN_LEFT, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIQ_PIN_LEFT, HIGH);
-    delayMicroseconds(5);
-    digitalWrite(TRIQ_PIN_LEFT, LOW);
-    pinMode(TRIQ_PIN_LEFT, INPUT);
-    duration_LEFT = pulseIn(TRIQ_PIN_LEFT, HIGH);
-    distance_LEFT = microsecondsToCentimeters(duration_LEFT); // CM Unit
-
-    // RIGHT
-    pinMode(TRIQ_PIN_RIGHT, OUTPUT);
-    digitalWrite(TRIQ_PIN_RIGHT, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIQ_PIN_RIGHT, HIGH);
-    delayMicroseconds(5);
-    digitalWrite(TRIQ_PIN_RIGHT, LOW);
-    pinMode(TRIQ_PIN_RIGHT, INPUT);
-    duration_RIGHT = pulseIn(TRIQ_PIN_RIGHT, HIGH);
-    distance_RIGHT = microsecondsToCentimeters(duration_RIGHT); // CM Unit
-
-    obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
-    obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
-}
-
-void check_field() {
   // Sensor 1
-  digitalWrite(LIGHT_SENSOR_PIN_1, HIGH); 
-  delayMicroseconds(10); 
-  pinMode(LIGHT_SENSOR_PIN_1, INPUT);
-  time_1 = micros();
-
-  while (digitalRead(LIGHT_SENSOR_PIN_1) == HIGH) {}
-
-  if ((static_cast<long>(micros()) - static_cast<long>(time_1)) > static_cast<long>(last_1) && color_1 == 1) {
-      color_1 = -1;
-  } else if ((static_cast<long>(micros()) - static_cast<long>(time_1)) < static_cast<long>(last_1) && color_1 == -1) {
-      color_1 = 1;
+  mySerial1.flush();
+  mySerial1.write(0x55); 
+  delay(100);
+  if (mySerial1.available() >= 2) {
+    HighByte1 = mySerial1.read();
+    LowByte1 = mySerial1.read();
+    Len1 = HighByte1 * 256 + LowByte1; 
+    if (Len1 > 1 && Len1 < 10000) {
+      Serial.print("Sensor 1 Distance: ");
+      distance_LEFT = Len1;
+    }
   }
 
   // Sensor 2
-  digitalWrite(LIGHT_SENSOR_PIN_2, HIGH); 
-  delayMicroseconds(10); 
-  pinMode(LIGHT_SENSOR_PIN_2, INPUT);
-  time_2 = micros();
-
-  while (digitalRead(LIGHT_SENSOR_PIN_2) == HIGH) {}
-
-  if ((static_cast<long>(micros()) - static_cast<long>(time_2)) > static_cast<long>(last_2) && color_2 == 1) {
-      color_2 = -1;
-  } else if ((static_cast<long>(micros()) - static_cast<long>(time_2)) < static_cast<long>(last_2) && color_2 == -1) {
-      color_2 = 1;
+  mySerial2.flush();
+  mySerial2.write(0x55); 
+  delay(100);
+  if (mySerial2.available() >= 2) {
+    HighByte2 = mySerial2.read();
+    LowByte2 = mySerial2.read();
+    Len2 = HighByte2 * 256 + LowByte2; 
+    if (Len2 > 1 && Len2 < 10000) {
+      Serial.print("Sensor 2 Distance: ");
+      distance_RIGHT = Len2;
+    }
   }
+  obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
+  obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
+}
 
-  if (color_1 == -1 || color_2 == -1) {
-    make_uturn();
-  } 
+void check_field() {
+  qtr.read(sensorValues);
+
+  LIGHT_1 = sensorValues[0];
+  LIGHT_2 = sensorValues[1];
 }
 
 void target_scan() {
