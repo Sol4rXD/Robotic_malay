@@ -27,7 +27,7 @@ unsigned int LowByte2 = 0;
 unsigned int Len2 = 0;
 
 const int TARGET_DISTANCE_THRESHOLD = 50; // CHECK
-const int FIELD_THRESHOLD = 2500; 
+const int FIELD_THRESHOLD = 1000; 
 const int SPEED_DEFAULT = 255; // CHECK
 
 const String FORWARD = "FORWARD";
