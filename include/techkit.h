@@ -85,7 +85,7 @@ void check_field() {
   LIGHT_1 = sensorValues[0];
   LIGHT_2 = sensorValues[1];
 
-  if(LIGHT_1 || LIGHT_2 < 2500) {
+  if(LIGHT_1 || LIGHT_2 < FIELD_THRESHOLD) {
     make_uturn();
   }
 }
