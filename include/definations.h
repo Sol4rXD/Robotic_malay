@@ -33,14 +33,12 @@ const int SPEED_DEFAULT = 255; // CHECK
 const String FORWARD = "FORWARD";
 const String BACKWARD = "BACKWARD";
 
-long duration_RIGHT, duration_LEFT, distance_RIGHT, distance_LEFT;
+long distance_RIGHT, distance_LEFT;
 
 bool targetDetected = false;
 
 bool obstacleLeft;
 bool obstacleRight;
-
-unsigned long time_1, time_2;
 
 const uint8_t SensorCount = 2;
 uint16_t sensorValues[SensorCount];
