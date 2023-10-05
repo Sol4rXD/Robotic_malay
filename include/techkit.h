@@ -47,7 +47,6 @@ void make_uturn() {
   stop_allmotor(500);
 }
 
-// Modify this again
 void measure_distance() {
   // Sensor 1
   mySerial1.flush();
@@ -85,6 +84,10 @@ void check_field() {
 
   LIGHT_1 = sensorValues[0];
   LIGHT_2 = sensorValues[1];
+
+  if(LIGHT_1 || LIGHT_2 < 2500) {
+    make_uturn();
+  }
 }
 
 void target_scan() {
