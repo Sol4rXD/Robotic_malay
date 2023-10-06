@@ -40,7 +40,11 @@ bool targetDetected = false;
 bool obstacleLeft;
 bool obstacleRight;
 
+// Light sensor
 const uint8_t SensorCount = 2;
 uint16_t sensorValues[SensorCount];
+
+int LIGHT_SENSOR_1 = 8;
+int LIGHT_SENSOR_2 = 9;
 
 int LIGHT_1, LIGHT_2;
