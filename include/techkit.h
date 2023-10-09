@@ -9,26 +9,24 @@ long microsecondsToCentimeters(long microseconds) {
 }
 
 void move_RIGHTmotor(int speed, String direction) {
-  analogWrite(MOTOR_RIGHT_PWM, speed); // PWM
   if(direction == "FORWARD"){ 
-    digitalWrite(MOTOR_RIGHT_1, HIGH);
+    analogWrite(MOTOR_RIGHT_1, speed);
     digitalWrite(MOTOR_RIGHT_2, LOW);
   }
   else if(direction == "BACKWARD"){
     digitalWrite(MOTOR_RIGHT_1, LOW);
-    digitalWrite(MOTOR_RIGHT_2, HIGH);
+    analogWrite(MOTOR_RIGHT_2, speed);
   }
 }
 
 void move_LEFTmotor(int speed, String direction) {
-  analogWrite(MOTOR_LEFT_PWM, speed); // PWM
   if(direction == "FORWARD"){
-    digitalWrite(MOTOR_LEFT_1, HIGH);
+    analogWrite(MOTOR_LEFT_1, speed);
     digitalWrite(MOTOR_LEFT_2, LOW);
   }
   else if(direction == "BACKWARD"){
     digitalWrite(MOTOR_LEFT_1, LOW);
-    digitalWrite(MOTOR_LEFT_2, HIGH); 
+    analogWrite(MOTOR_LEFT_2, speed); 
   }
 }
 

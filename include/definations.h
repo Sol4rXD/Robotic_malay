@@ -10,10 +10,6 @@
 #define MOTOR_LEFT_1 12  // CHECK
 #define MOTOR_LEFT_2 12  // CHECK
 
-// Motor both PWM
-#define MOTOR_RIGHT_PWM A0  // CHECK
-#define MOTOR_LEFT_PWM A1   // CHECK
-
 // Ultrasonic 
 HardwareSerial &mySerial1 = Serial1;
 HardwareSerial &mySerial2 = Serial2;
