@@ -4,12 +4,12 @@
 void setup() {
   Serial.begin(9600);
   qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){8, 9}, SensorCount);
+  qtr.setSensorPins((const uint8_t[]){8, 10}, SensorCount);
 }
 
 void loop() {
   // Debugging
-  check_field();
+  check_fi9Ueld();
   
   Serial.print("Sensor 1: ");
   Serial.print(LIGHT_1);

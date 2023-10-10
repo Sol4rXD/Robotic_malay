@@ -6,14 +6,12 @@ void setup() {
   
   pinMode(MOTOR_RIGHT_1, OUTPUT);
   pinMode(MOTOR_RIGHT_2, OUTPUT);
-  pinMode(MOTOR_RIGHT_PWM, OUTPUT);
-  
-  pinMode(MOTOR_LEFT_PWM, OUTPUT);
+
   pinMode(MOTOR_LEFT_1, OUTPUT);
   pinMode(MOTOR_LEFT_2, OUTPUT);
 
   qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){8, 9}, SensorCount);
+  qtr.setSensorPins((const uint8_t[]){8, 10}, SensorCount);
 
   delay(3000);
 }
