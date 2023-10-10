@@ -103,7 +103,6 @@ void target_scan() {
   } else {
     move_RIGHTmotor(255, FORWARD);
     move_LEFTmotor(255, BACKWARD);
-    Serial.println("Move motor");
   }
 }
 

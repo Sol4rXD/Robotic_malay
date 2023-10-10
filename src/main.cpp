@@ -20,17 +20,22 @@ void setup() {
 
 void loop() {
   check_field();
+  
+  static int time = millis();
 
-  Serial.print("Sensor 1: ");
-  Serial.print(LIGHT_1);
-  Serial.print("\tSensor 2: ");
-  Serial.println(LIGHT_2);
-  Serial.print("Ultra Left: ");
-  Serial.print(distance_LEFT);
-  Serial.print("\tUltra Right: ");
-  Serial.println(distance_RIGHT);
-  Serial.println(targetDetected);
-  Serial.println("------------------------------------");
+  if(millis() - time >= 1500) {
+    Serial.print("Sensor 1: ");
+    Serial.print(LIGHT_1);
+    Serial.print("\tSensor 2: ");
+    Serial.println(LIGHT_2);
+    Serial.print("Ultra Left: ");
+    Serial.print(distance_LEFT);
+    Serial.print("\tUltra Right: ");
+    Serial.println(distance_RIGHT);
+    Serial.println(targetDetected);
+    Serial.println("------------------------------------");
+    time = millis();
+  }
 
   if (!targetDetected) {
     target_scan(); 
