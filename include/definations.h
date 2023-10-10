@@ -3,16 +3,17 @@
 #define DEC 10
 
 // Motor right
-#define MOTOR_RIGHT_1 12 // CHECK
-#define MOTOR_RIGHT_2 13 // CHECK
+#define MOTOR_RIGHT_1 2 // CHECK
+#define MOTOR_RIGHT_2 4 // CHECK
 
 // Motor left
-#define MOTOR_LEFT_1 12  // CHECK
-#define MOTOR_LEFT_2 12  // CHECK
+#define MOTOR_LEFT_1 6  // CHECK
+#define MOTOR_LEFT_2 8  // CHECK
 
 // Ultrasonic 
 HardwareSerial &mySerial1 = Serial1;
 HardwareSerial &mySerial2 = Serial2;
+
 
 unsigned int HighByte1 = 0;
 unsigned int LowByte1 = 0;
