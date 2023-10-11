@@ -20,7 +20,8 @@ void setup() {
 
 void loop() {
   check_field();
-  
+
+  // Debugging
   static int time = millis();
 
   if(millis() - time >= 1500) {
