@@ -13,7 +13,7 @@ void setup() {
   pinMode(MOTOR_LEFT_2, OUTPUT);
 
   qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){3, 5}, SensorCount);
+  qtr.setSensorPins((const uint8_t[]){3, 7}, SensorCount);
 
   delay(3000);
 }
@@ -21,22 +21,8 @@ void setup() {
 void loop() {
   check_field();
 
-  // Debugging
-  static int time = millis();
-
-  if(millis() - time >= 1500) {
-    Serial.print("Sensor 1: ");
-    Serial.print(LIGHT_1);
-    Serial.print("\tSensor 2: ");
-    Serial.println(LIGHT_2);
-    Serial.print("Ultra Left: ");
-    Serial.print(distance_LEFT);
-    Serial.print("\tUltra Right: ");
-    Serial.println(distance_RIGHT);
-    Serial.println(targetDetected);
-    Serial.println("------------------------------------");
-    time = millis();
-  }
+  // Enable for debug
+  debugging();
 
   if (!targetDetected) {
     target_scan(); 

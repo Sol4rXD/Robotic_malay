@@ -52,11 +52,11 @@ void make_uturn() {
   stop_allmotor(250);
   move_RIGHTmotor(255, BACKWARD);
   move_LEFTmotor(255, BACKWARD);
-  delay(500);
+  delay(500); 
   move_RIGHTmotor(255, FORWARD);
-  move_RIGHTmotor(255, BACKWARD);
+  move_LEFTmotor(255, BACKWARD);
   delay(250);
-  stop_allmotor(250);
+  stop_allmotor(50);
 }
 
 void measure_distance() {
@@ -85,8 +85,8 @@ void measure_distance() {
 void check_field() {
   qtr.read(sensorValues);
 
-  LIGHT_1 = sensorValues[0];
-  LIGHT_2 = sensorValues[1];
+  LIGHT_1 = sensorValues[1];
+  LIGHT_2 = sensorValues[0];
 
   if(LIGHT_1 < FIELD_THRESHOLD || LIGHT_2 < FIELD_THRESHOLD) {
     Serial.println("Make Uturn");
@@ -136,4 +136,20 @@ void target_lock() {
   }
 }
 
+void debugging() {
+  static int time = millis();
 
+  if(millis() - time >= 1500) {
+    Serial.print("Sensor 1: ");
+    Serial.print(LIGHT_1);
+    Serial.print("\tSensor 2: ");
+    Serial.println(LIGHT_2);
+    Serial.print("Ultra Left: ");
+    Serial.print(distance_LEFT);
+    Serial.print("\tUltra Right: ");
+    Serial.println(distance_RIGHT);
+    Serial.println(targetDetected);
+    Serial.println("------------------------------------");
+    time = millis();
+  }
+}
