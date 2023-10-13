@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <techkit.h>
 
+constexpr const uint8_t QTR_PINS[] = {3, 7};
+
 void setup() {
   Serial.begin(9600);
   mySerial1.begin(9600);
@@ -13,7 +15,7 @@ void setup() {
   pinMode(MOTOR_LEFT_2, OUTPUT);
 
   qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){3, 7}, SensorCount);
+  qtr.setSensorPins(QTR_PINS, SensorCount);
 
   delay(3000);
 }
@@ -21,7 +23,7 @@ void setup() {
 void loop() {
   check_field();
 
-  // Enable for debug
+  // Use it to debugging
   debugging();
 
   if (!targetDetected) {

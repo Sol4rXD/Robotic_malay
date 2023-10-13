@@ -20,26 +20,31 @@ void setup() {
 
 void loop() {
   // Debugging  
-  // check_field();
+
+  // Ultrasonic
+
   // measure_distance();
   // Serial.print("DistanceLEFT: ");
   // Serial.println(distance_LEFT);
   // Serial.print("DistanceRIGHT: ");
   // Serial.println(distance_RIGHT);
   // Serial.println("------------------------------------");
+
+  // Light sensor 
+
+  // check_field();
   // Serial.print("Sensor LEFT: ");
   // Serial.print(LIGHT_1);
   // Serial.print("\tSensor RIGHT: ");
   // Serial.println(LIGHT_2);
   // Serial.println("------------------------------------");
   // delay(250);
-  move_LEFTmotor(255, FORWARD);
-  move_RIGHTmotor(255, FORWARD);
-  Serial.println("MoTOR");
-  // delay(3000);
-  // while(1) {
+
+  // Motor
   
-  // }
+  move_LEFTmotor(50, FORWARD);
+  move_RIGHTmotor(50, FORWARD);
+  Serial.println("MoTOR");
 }
 
 

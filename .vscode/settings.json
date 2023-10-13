@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "wiring_private.h": "c"
+        "wiring_private.h": "c",
+        "vt_tools": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

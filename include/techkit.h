@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include <definations.h>
 #include <QTRSensors.h>
+#include "smart_delay.h"
+
+using vt::smart_delay;
 
 QTRSensors qtr;
 
-long microsecondsToCentimeters(long microseconds) {
-  return microseconds / 29 / 2;
-}
+smart_delay sd1(100ul, millis);
+smart_delay sd2(100ul, millis);
+smart_delay sd3(1500, millis);
 
 void move_RIGHTmotor(int speed, String direction) {
   if(direction == "FORWARD"){ 
@@ -49,35 +52,38 @@ void stop_motorRIGHT() {
 }
 
 void make_uturn() {
-  stop_allmotor(250);
+  stop_allmotor(50);
   move_RIGHTmotor(255, BACKWARD);
   move_LEFTmotor(255, BACKWARD);
   delay(500); 
   move_RIGHTmotor(255, FORWARD);
   move_LEFTmotor(255, BACKWARD);
-  delay(250);
+  delay(500);
   stop_allmotor(50);
 }
 
 void measure_distance() {
   // Sensor 1
-  mySerial1.flush();
-  mySerial1.write(0x55); 
-  delay(100);
-  HighByte1 = mySerial1.read();
-  LowByte1 = mySerial1.read();
-  Len1 = HighByte1 * 256 + LowByte1; 
-  distance_LEFT = Len1;
+  if (sd1) {
+    mySerial1.flush();
+    mySerial1.write(0x55); 
+  }
+  if (mySerial1.available() > 1) {
+    distance_LEFT = 0;
+    distance_LEFT |= static_cast<uint16_t>(mySerial1.read()) << 8;
+    distance_LEFT |= static_cast<uint16_t>(mySerial1.read());
+  }
 
   // Sensor 2
-  mySerial2.flush();
-  mySerial2.write(0x55); 
-  delay(100);
-  HighByte2 = mySerial2.read();
-  LowByte2 = mySerial2.read();
-  Len2 = HighByte2 * 256 + LowByte2; 
-  distance_RIGHT = Len2;
-
+  if (sd2) {
+    mySerial2.flush();
+    mySerial2.write(0x55); 
+  }
+  if (mySerial2.available() > 1) {
+    distance_RIGHT = 0;
+    distance_RIGHT |= static_cast<uint16_t>(mySerial2.read()) << 8;
+    distance_RIGHT |= static_cast<uint16_t>(mySerial2.read());
+  }
   obstacleLeft = distance_LEFT < TARGET_DISTANCE_THRESHOLD;
   obstacleRight = distance_RIGHT < TARGET_DISTANCE_THRESHOLD;
 }
@@ -89,7 +95,7 @@ void check_field() {
   LIGHT_2 = sensorValues[0];
 
   if(LIGHT_1 < FIELD_THRESHOLD || LIGHT_2 < FIELD_THRESHOLD) {
-    Serial.println("Make Uturn");
+    DEBUG("Make Uturn");
     make_uturn();
   }
 }
@@ -99,10 +105,10 @@ void target_scan() {
 
   if (obstacleLeft || obstacleRight) {
     targetDetected = true;
-    Serial.println("targetdetected = TRUE");
+    DEBUG("Enemies detected");
   } else {
     move_RIGHTmotor(255, FORWARD);
-    move_LEFTmotor(255, BACKWARD);
+    move_LEFTmotor(255, FORWARD);
   }
 }
 
@@ -110,36 +116,36 @@ void target_lock() {
   measure_distance();
 
   if (obstacleLeft && !obstacleRight) {
+    // stop_motorLEFT();
+    move_LEFTmotor(SPEED_DEFAULT, BACKWARD);
     move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    stop_motorLEFT();
 
     targetDetected = true;
-    Serial.println("targetdetected = TRUE");
+    // DEBUG("targetdetected = TRUE");
 
   } else if (!obstacleLeft && obstacleRight) {
-    stop_motorRIGHT();
+    // stop_motorRIGHT();
+    move_RIGHTmotor(SPEED_DEFAULT, BACKWARD);
     move_LEFTmotor(SPEED_DEFAULT, FORWARD);
 
     targetDetected = true;
-    Serial.println("targetdetected = TRUE");
+    // DEBUG("targetdetected = TRUE");
 
   } else if (obstacleLeft && obstacleRight) { 
     move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
     move_LEFTmotor(SPEED_DEFAULT, FORWARD);
 
     targetDetected = true;
-    Serial.println("targetdetected = TRUE");
+    // DEBUG("targetdetected = TRUE");
 
   } else if (!obstacleLeft && !obstacleRight) {
     targetDetected = false;
-    Serial.println("targetdetected = FALSE");
+    // DEBUG("targetdetected = FALSE");
   }
 }
 
 void debugging() {
-  static int time = millis();
-
-  if(millis() - time >= 1500) {
+  if(sd3) {
     Serial.print("Sensor 1: ");
     Serial.print(LIGHT_1);
     Serial.print("\tSensor 2: ");
@@ -150,6 +156,5 @@ void debugging() {
     Serial.println(distance_RIGHT);
     Serial.println(targetDetected);
     Serial.println("------------------------------------");
-    time = millis();
   }
 }
