@@ -17,14 +17,18 @@ void setup() {
   qtr.setTypeRC();
   qtr.setSensorPins(QTR_PINS, SensorCount);
 
-  delay(3000);
+  delay(2000);
+
+  move_LEFTmotor(LEFT_SPEED, BACKWARD);
+  move_RIGHTmotor(RIGHT_SPEED, FORWARD);
+  delay(700);
 }
 
 void loop() {
   check_field();
 
   // Use it to debugging
-  debugging();
+  // debugging();
 
   if (!targetDetected) {
     target_scan(); 

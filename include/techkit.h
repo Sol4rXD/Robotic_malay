@@ -52,15 +52,23 @@ void stop_motorRIGHT() {
 }
 
 void make_uturn() {
+  if(LIGHT_RIGHT < FIELD_THRESHOLD) {
+    move_RIGHTmotor(100, BACKWARD);
+    move_LEFTmotor(255, BACKWARD);
+    delay(750); 
+    move_RIGHTmotor(RIGHT_SPEED, BACKWARD);
+    move_LEFTmotor(LEFT_SPEED, FORWARD);
+  }
+  else {
+    move_RIGHTmotor(100, BACKWARD);
+    move_LEFTmotor(255, BACKWARD);
+    delay(750); 
+    move_RIGHTmotor(RIGHT_SPEED, FORWARD);
+    move_LEFTmotor(LEFT_SPEED, BACKWARD);
+  }
+  delay(1000);
   stop_allmotor(50);
-  move_RIGHTmotor(255, BACKWARD);
-  move_LEFTmotor(255, BACKWARD);
-  delay(500); 
-  move_RIGHTmotor(255, FORWARD);
-  move_LEFTmotor(255, BACKWARD);
-  delay(500);
-  stop_allmotor(50);
-}
+} 
 
 void measure_distance() {
   // Sensor 1
@@ -91,10 +99,10 @@ void measure_distance() {
 void check_field() {
   qtr.read(sensorValues);
 
-  LIGHT_1 = sensorValues[1];
-  LIGHT_2 = sensorValues[0];
+  LIGHT_RIGHT = sensorValues[1];
+  LIGHT_LEFT = sensorValues[0];
 
-  if(LIGHT_1 < FIELD_THRESHOLD || LIGHT_2 < FIELD_THRESHOLD) {
+  if(LIGHT_RIGHT < FIELD_THRESHOLD || LIGHT_LEFT < FIELD_THRESHOLD) {
     DEBUG("Make Uturn");
     make_uturn();
   }
@@ -107,33 +115,33 @@ void target_scan() {
     targetDetected = true;
     DEBUG("Enemies detected");
   } else {
-    move_RIGHTmotor(255, FORWARD);
-    move_LEFTmotor(255, FORWARD);
+    move_RIGHTmotor(RIGHT_SPEED, FORWARD);
+    move_LEFTmotor(LEFT_SPEED, FORWARD);
   }
 }
-
+ 
 void target_lock() {
   measure_distance();
 
   if (obstacleLeft && !obstacleRight) {
     // stop_motorLEFT();
-    move_LEFTmotor(SPEED_DEFAULT, BACKWARD);
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
+    move_LEFTmotor(LEFT_SPEED, BACKWARD);
+    move_RIGHTmotor(RIGHT_SPEED, FORWARD);
 
     targetDetected = true;
     // DEBUG("targetdetected = TRUE");
 
   } else if (!obstacleLeft && obstacleRight) {
     // stop_motorRIGHT();
-    move_RIGHTmotor(SPEED_DEFAULT, BACKWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+    move_RIGHTmotor(RIGHT_SPEED, BACKWARD);
+    move_LEFTmotor(LEFT_SPEED, FORWARD);
 
     targetDetected = true;
     // DEBUG("targetdetected = TRUE");
 
   } else if (obstacleLeft && obstacleRight) { 
-    move_RIGHTmotor(SPEED_DEFAULT, FORWARD);
-    move_LEFTmotor(SPEED_DEFAULT, FORWARD);
+    move_RIGHTmotor(RIGHT_SPEED, FORWARD);
+    move_LEFTmotor(LEFT_SPEED, FORWARD);
 
     targetDetected = true;
     // DEBUG("targetdetected = TRUE");
@@ -146,10 +154,10 @@ void target_lock() {
 
 void debugging() {
   if(sd3) {
-    Serial.print("Sensor 1: ");
-    Serial.print(LIGHT_1);
-    Serial.print("\tSensor 2: ");
-    Serial.println(LIGHT_2);
+    Serial.print("Sensor R: ");
+    Serial.print(LIGHT_RIGHT);
+    Serial.print("\tSensor L: ");
+    Serial.println(LIGHT_LEFT);
     Serial.print("Ultra Left: ");
     Serial.print(distance_LEFT);
     Serial.print("\tUltra Right: ");

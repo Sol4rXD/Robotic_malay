@@ -41,10 +41,15 @@ void loop() {
   // delay(250);
 
   // Motor
+
+  move_LEFTmotor(255, FORWARD);
+  move_RIGHTmotor(100, FORWARD);
+  delay(3500);
+  while (1)
+  {
+  }
   
-  move_LEFTmotor(50, FORWARD);
-  move_RIGHTmotor(50, FORWARD);
-  Serial.println("MoTOR");
+  // Serial.println("MoTOR");
 }
 
 
